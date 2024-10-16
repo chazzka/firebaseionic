@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Inbox
+      AHOJ
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -19,7 +19,27 @@
     </ion-toolbar>
   </ion-header>
   
+  tady je neco
+
+  <ion-button (click)="leagues()">
+    ligy
+  </ion-button>
+
+  <ion-button (click)="kluby()">
+    kluby
+  </ion-button>
+
+  <ion-button (click)="hraci()">
+    hraci
+  </ion-button>
+
+  <ion-button (click)="zapasy()">
+    zapasy
+  </ion-button>
+
+
+
   <ion-list>
-    <app-message *ngFor="let message of getMessages()" [message]="message"></app-message>
+    <app-message *ngFor="let message of clubs" [message]="message"></app-message>
   </ion-list>
 </ion-content>

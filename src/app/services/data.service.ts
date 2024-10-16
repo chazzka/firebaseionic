@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
+
 
 export interface Message {
   fromName: string;
@@ -12,72 +15,32 @@ export interface Message {
   providedIn: 'root'
 })
 export class DataService {
-  public messages: Message[] = [
-    {
-      fromName: 'Matt Chorsey',
-      subject: 'New event: Trip to Vegas',
-      date: '9:32 AM',
-      id: 0,
-      read: false
-    },
-    {
-      fromName: 'Lauren Ruthford',
-      subject: 'Long time no chat',
-      date: '6:12 AM',
-      id: 1,
-      read: false
-    },
-    {
-      fromName: 'Jordan Firth',
-      subject: 'Report Results',
-      date: '4:55 AM',
-      id: 2,
-      read: false
-    },
-    {
-      fromName: 'Bill Thomas',
-      subject: 'The situation',
-      date: 'Yesterday',
-      id: 3,
-      read: false
-    },
-    {
-      fromName: 'Joanne Pollan',
-      subject: 'Updated invitation: Swim lessons',
-      date: 'Yesterday',
-      id: 4,
-      read: false
-    },
-    {
-      fromName: 'Andrea Cornerston',
-      subject: 'Last minute ask',
-      date: 'Yesterday',
-      id: 5,
-      read: false
-    },
-    {
-      fromName: 'Moe Chamont',
-      subject: 'Family Calendar - Version 1',
-      date: 'Last Week',
-      id: 6,
-      read: false
-    },
-    {
-      fromName: 'Kelly Richardson',
-      subject: 'Placeholder Headhots',
-      date: 'Last Week',
-      id: 7,
-      read: false
-    }
-  ];
+  constructor(private firestore: AngularFirestore) {}
 
-  constructor() { }
+  allDocuments: any[] = [];
 
-  public getMessages(): Message[] {
-    return this.messages;
+  getLeagues(): Observable<any[]> {
+    return this.firestore
+      .collection(`fotbal`)
+      .valueChanges({ idField: 'id' });
   }
 
-  public getMessageById(id: number): Message {
-    return this.messages[id];
+  getClubsByLeague(league:string): Observable<any[]> {
+    return this.firestore
+      .collection(`fotbal/${league}/clubs`)
+      .valueChanges({ idField: 'id' });
   }
+
+  getClubsPlayers(league:string, clubid: string): Observable<any[]> {
+    return this.firestore
+      .collection(`fotbal/${league}/clubs/${clubid}/players`)
+      .valueChanges({ idField: 'id' });
+  }
+
+  getMatches(league:string): Observable<any[]> {
+    return this.firestore
+      .collection(`fotbal/${league}/matches`)
+      .valueChanges({ idField: 'id' });
+  }
+
 }

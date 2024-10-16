@@ -11,6 +11,7 @@ import { DataService, Message } from '../services/data.service';
 })
 export class HomePage {
   private data = inject(DataService);
+  clubs: any[] = [];
   constructor() {}
 
   refresh(ev: any) {
@@ -19,7 +20,32 @@ export class HomePage {
     }, 3000);
   }
 
-  getMessages(): Message[] {
-    return this.data.getMessages();
+  ngOnInit() {
   }
+
+
+  leagues() {
+    this.data.getLeagues().subscribe(clubs => {
+      console.log(clubs);
+    });
+  }
+
+  kluby() {
+    this.data.getClubsByLeague('czech_first_league').subscribe(clubs => {
+      console.log(clubs);
+    });
+  }
+
+  hraci() {
+    this.data.getClubsPlayers('czech_first_league', 'banik_ostrava').subscribe(clubs => {
+      console.log(clubs);
+    });
+  }
+
+  zapasy() {
+    this.data.getMatches('czech_first_league').subscribe(clubs => {
+      console.log(clubs);
+    });
+  }
+
 }
